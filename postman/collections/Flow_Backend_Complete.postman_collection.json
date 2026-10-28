@@ -1,0 +1,591 @@
+{
+    "info": {
+        "_postman_id": "flow-full-api-collection-v2",
+        "name": "Flow Complete Backend APIs",
+        "description": "Production-ready API collection covering all Flow Android application backend modules: Migrations, Authentication, Profile, Routine Preferences, Tasks Management, Focus Sessions, Insights & Analytics, and Workspace Settings.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "1. Database Migrations & Health",
+            "item": [
+                {
+                    "name": "Run Database Migrations",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "http://localhost/flow_backend/run_migrations.php",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "run_migrations.php"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "2. Authentication",
+            "item": [
+                {
+                    "name": "Sign Up (Register)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Alex Rivera\",\n  \"email\": \"alex.rivera@example.com\",\n  \"password\": \"SecurePass123!\",\n  \"avatar_url\": \"https://images.unsplash.com/photo-1534528741775-53994a69daeb\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost/flow_backend/auth/register.php",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "auth",
+                                "register.php"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Log In",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"email\": \"demo@flowapp.com\",\n  \"password\": \"password123\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost/flow_backend/auth/login.php",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "auth",
+                                "login.php"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "3. Profile & Account",
+            "item": [
+                {
+                    "name": "Get User Profile",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost/flow_backend/profile/get_profile.php?user_id=1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "profile",
+                                "get_profile.php"
+                            ],
+                            "query": [
+                                {
+                                    "key": "user_id",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Profile / Personal Information",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"user_id\": 1,\n  \"name\": \"Alex Rivera (Pro)\",\n  \"avatar_url\": \"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost/flow_backend/profile/update_profile.php",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "profile",
+                                "update_profile.php"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "4. Routine Preferences",
+            "item": [
+                {
+                    "name": "Get Routine Preferences",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost/flow_backend/preferences/get_preferences.php?user_id=1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "preferences",
+                                "get_preferences.php"
+                            ],
+                            "query": [
+                                {
+                                    "key": "user_id",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Save Routine Preferences (Upsert)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"user_id\": 1,\n  \"primary_goal\": \"Deep Work & Productivity\",\n  \"preferred_focus_duration\": 30,\n  \"daily_focus_goal_minutes\": 150,\n  \"reminders_enabled\": true,\n  \"reminder_time\": \"08:30:00\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost/flow_backend/preferences/save_preferences.php",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "preferences",
+                                "save_preferences.php"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "5. Tasks Management",
+            "item": [
+                {
+                    "name": "Get All Tasks",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost/flow_backend/tasks/get_tasks.php?user_id=1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "tasks",
+                                "get_tasks.php"
+                            ],
+                            "query": [
+                                {
+                                    "key": "user_id",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Tasks (Filtered by Completion: Pending)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost/flow_backend/tasks/get_tasks.php?user_id=1&is_completed=0",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "tasks",
+                                "get_tasks.php"
+                            ],
+                            "query": [
+                                {
+                                    "key": "user_id",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "is_completed",
+                                    "value": "0"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Tasks (Filtered by Category & Priority)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost/flow_backend/tasks/get_tasks.php?user_id=1&category=Engineering&priority=high",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "tasks",
+                                "get_tasks.php"
+                            ],
+                            "query": [
+                                {
+                                    "key": "user_id",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "category",
+                                    "value": "Engineering"
+                                },
+                                {
+                                    "key": "priority",
+                                    "value": "high"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create New Task",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"user_id\": 1,\n  \"title\": \"Implement Room Database for Offline Sync\",\n  \"description\": \"Design local room entities and DAOs for Android client offline caching.\",\n  \"category\": \"Engineering\",\n  \"priority\": \"high\",\n  \"due_date\": \"2026-11-05\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost/flow_backend/tasks/create_task.php",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "tasks",
+                                "create_task.php"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Task Details / Toggle Completion",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"id\": 1,\n  \"user_id\": 1,\n  \"title\": \"Implement Room Database for Offline Sync (Completed)\",\n  \"is_completed\": 1,\n  \"priority\": \"high\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost/flow_backend/tasks/update_task.php",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "tasks",
+                                "update_task.php"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Task",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"id\": 1,\n  \"user_id\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost/flow_backend/tasks/delete_task.php",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "tasks",
+                                "delete_task.php"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "6. Focus Sessions & Timer Logging",
+            "item": [
+                {
+                    "name": "Log Completed Focus Session",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"user_id\": 1,\n  \"task_id\": 1,\n  \"duration_minutes\": 25,\n  \"session_type\": \"pomodoro\",\n  \"status\": \"completed\",\n  \"started_at\": \"2026-10-28 08:30:00\",\n  \"completed_at\": \"2026-10-28 08:55:00\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost/flow_backend/focus/log_session.php",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "focus",
+                                "log_session.php"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Log Abandoned Focus Session",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"user_id\": 1,\n  \"task_id\": null,\n  \"duration_minutes\": 10,\n  \"session_type\": \"pomodoro\",\n  \"status\": \"abandoned\",\n  \"started_at\": \"2026-10-28 09:00:00\",\n  \"completed_at\": \"2026-10-28 09:10:00\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost/flow_backend/focus/log_session.php",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "focus",
+                                "log_session.php"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Focus Sessions History",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost/flow_backend/focus/get_sessions.php?user_id=1&limit=20&offset=0",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "focus",
+                                "get_sessions.php"
+                            ],
+                            "query": [
+                                {
+                                    "key": "user_id",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "20"
+                                },
+                                {
+                                    "key": "offset",
+                                    "value": "0"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "7. Insights & Analytics Aggregation",
+            "item": [
+                {
+                    "name": "Get Aggregated Insights & Analytics",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost/flow_backend/insights/get_insights.php?user_id=1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "insights",
+                                "get_insights.php"
+                            ],
+                            "query": [
+                                {
+                                    "key": "user_id",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "8. Workspace Dashboard & Settings",
+            "item": [
+                {
+                    "name": "Get Workspace Consolidated Dashboard",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost/flow_backend/workspace/get_workspace.php?user_id=1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "workspace",
+                                "get_workspace.php"
+                            ],
+                            "query": [
+                                {
+                                    "key": "user_id",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update App Settings (Theme, Sounds & Groot AI Toggle)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"user_id\": 1,\n  \"theme\": \"dark\",\n  \"sound_enabled\": true,\n  \"vibration_enabled\": true,\n  \"groot_suggestions_enabled\": true\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost/flow_backend/workspace/update_settings.php",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "path": [
+                                "flow_backend",
+                                "workspace",
+                                "update_settings.php"
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost/flow_backend",
+            "type": "string"
+        },
+        {
+            "key": "userId",
+            "value": "1",
+            "type": "string"
+        },
+        {
+            "key": "taskId",
+            "value": "1",
+            "type": "string"
+        }
+    ]
+}
+

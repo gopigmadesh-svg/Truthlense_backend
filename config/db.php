@@ -3,7 +3,7 @@
 $host = "localhost";
 $username = "root";
 $password = "";
-$database = "truthlens_db"; // Replace with your MySQL database name
+$database = "truthlense"; // Replace with your MySQL database name
 
 $conn = new mysqli($host, $username, $password, $database);
 

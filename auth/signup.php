@@ -1,6 +1,5 @@
-
 <?php
-header("Content-Type: application/json");
+header("Content-Type: application/json; charset=UTF-8");
 
 require_once __DIR__ . "/../config/db.php";
 
@@ -13,30 +12,69 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
-$email = trim($_POST["email"] ?? "");
-$password = $_POST["password"] ?? "";
+// Read JSON raw body
+$data = json_decode(file_get_contents("php://input"), true);
 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL) ||
-    strlen($password) < 8) {
+if (!is_array($data)) {
     http_response_code(400);
     echo json_encode([
         "success" => false,
-        "message" => "Enter a valid email and password with at least 8 characters"
+        "message" => "Invalid JSON data"
     ]);
     exit;
 }
 
+$name = trim($data["name"] ?? ($data["fullName"] ?? ""));
+$email = trim($data["email"] ?? "");
+$password = $data["password"] ?? "";
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL) ||
+    !is_string($password) ||
+    strlen($password) < 6) {
+    http_response_code(400);
+    echo json_encode([
+        "success" => false,
+        "message" => "Enter a valid email and password with at least 6 characters"
+    ]);
+    exit;
+}
+
+// Hash password before saving
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-$stmt = $conn->prepare(
-    "INSERT INTO users (email, password) VALUES (?, ?)"
-);
-$stmt->bind_param("ss", $email, $hashedPassword);
+// Check if 'name' column exists in users table
+$colCheck = $conn->query("SHOW COLUMNS FROM `users` LIKE 'name'");
+$hasNameCol = ($colCheck && $colCheck->num_rows > 0);
+
+if ($hasNameCol) {
+    $stmt = $conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
+    if (!$stmt) {
+        http_response_code(500);
+        echo json_encode(["success" => false, "message" => "Database query prepare failed: " . $conn->error]);
+        exit;
+    }
+    $stmt->bind_param("sss", $name, $email, $hashedPassword);
+} else {
+    $stmt = $conn->prepare("INSERT INTO users (email, password) VALUES (?, ?)");
+    if (!$stmt) {
+        http_response_code(500);
+        echo json_encode(["success" => false, "message" => "Database query prepare failed: " . $conn->error]);
+        exit;
+    }
+    $stmt->bind_param("ss", $email, $hashedPassword);
+}
 
 if ($stmt->execute()) {
+    $newId = $stmt->insert_id;
+    http_response_code(201);
     echo json_encode([
         "success" => true,
-        "message" => "Signup successful"
+        "message" => "Signup successful",
+        "data" => [
+            "id" => $newId,
+            "name" => $name,
+            "email" => $email
+        ]
     ]);
 } else {
     if ($stmt->errno === 1062) {
@@ -44,7 +82,7 @@ if ($stmt->execute()) {
         $message = "Email already registered";
     } else {
         http_response_code(500);
-        $message = "Signup failed";
+        $message = "Signup failed: " . $stmt->error;
     }
 
     echo json_encode([
@@ -56,5 +94,3 @@ if ($stmt->execute()) {
 $stmt->close();
 $conn->close();
 ?>
-
-
